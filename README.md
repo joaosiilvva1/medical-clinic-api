@@ -12,7 +12,7 @@ O projeto segue boas práticas utilizadas no mercado, como **separação de resp
 
 Implementação do **Swagger UI** para visualização e testes rápidos dos endpoints da API.
 
-### ⚠️ Tratamento de Erros
+### ⚠️ Tratamento de Erro
 
 Padronização das respostas de erro da aplicação, incluindo códigos como:
 
