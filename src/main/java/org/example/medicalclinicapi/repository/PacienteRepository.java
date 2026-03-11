@@ -1,10 +1,10 @@
 package org.example.medicalclinicapi.repository;
 
-import org.example.medicalclinicapi.domain.doctor.Doctor;
+import org.example.medicalclinicapi.domain.paciente.Paciente;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DoctorRepository extends JpaRepository<Doctor, Long> {
-    Page<Doctor> findAllByActiveTrue(Pageable pagination);
+public interface PacienteRepository extends JpaRepository<Paciente, Long> {
+    Page<Paciente> findAllByActiveTrue(Pageable paginacao);
 }
