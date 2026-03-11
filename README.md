@@ -1,213 +1,165 @@
-# 🩺 Medical Clinic API (Voll.med)
+# 🩺 Voll.med API - Clínica Médica
 
-Uma API REST para gerenciamento de médicos de uma clínica médica.
+Uma **API REST profissional** para o gerenciamento de uma clínica médica, desenvolvida com **Java 21** e **Spring Boot 3**.
 
-Este projeto foi desenvolvido utilizando **Java 21** e **Spring Boot 3**, com foco em boas práticas de desenvolvimento, organização de código, separação de responsabilidades e persistência de dados em banco relacional.
-
-A API permite cadastrar, listar, atualizar e desativar médicos, mantendo a integridade dos dados históricos através de **exclusão lógica**.
+O projeto segue boas práticas utilizadas no mercado, como **separação de responsabilidades, validações rigorosas de dados, documentação interativa da API e tratamento padronizado de erros**.
 
 ---
 
-# 🚀 Funcionalidades
+# 🚀 Novidades da Versão Atual
 
-A API fornece um **CRUD completo de médicos**.
+### 📖 Documentação Interativa
 
-### ✔ Cadastro de médicos
+Implementação do **Swagger UI** para visualização e testes rápidos dos endpoints da API.
 
-Permite registrar novos médicos com validação de dados como:
+### ⚠️ Tratamento de Erros
 
-* Nome
-* Email
-* Telefone
-* Especialidade
+Padronização das respostas de erro da aplicação, incluindo códigos como:
 
-### ✔ Listagem paginada
+* 400 – Bad Request
+* 404 – Not Found
+* 500 – Internal Server Error
 
-Consulta de médicos ativos com suporte a:
+Isso facilita a integração com aplicações **Front-end**.
 
-* Paginação
-* Ordenação
+### 🔒 Segurança e Validação de Dados
 
-### ✔ Atualização de dados
+Uso de **Bean Validation** para garantir a integridade das informações recebidas pela API.
 
-Atualização de informações como:
+Exemplos de validações:
 
-* Nome
-* Telefone
-* Endereço
-
-### ✔ Exclusão lógica
-
-Os médicos não são removidos do banco de dados.
-Eles são **desativados**, preservando o histórico.
+* campos obrigatórios
+* validação de e-mail
+* validação de CPF
 
 ---
 
-# 🏗 Arquitetura do Projeto
+# 🏗 Arquitetura e Organização
 
-A aplicação segue uma **arquitetura em camadas**, muito utilizada em aplicações backend Java.
+A aplicação segue o padrão **arquitetura em camadas**, amplamente utilizado em aplicações backend com Spring.
 
 ```
-Controller → Recebe requisições HTTP
-
-Service → Contém as regras de negócio
-
-Repository → Responsável pelo acesso ao banco de dados
-
-DTO → Objetos de transferência de dados
-
-Entity → Representação das entidades do banco
+Controllers  → Exposição dos endpoints REST
+Services     → Regras de negócio da aplicação
+Repositories → Acesso e manipulação do banco de dados
+DTOs         → Transferência de dados entre camadas
+Infra        → Configurações globais e tratamento de exceções
 ```
 
 Essa estrutura facilita:
 
 * manutenção
-* organização
-* escalabilidade do projeto
+* escalabilidade
+* organização do código
 
 ---
 
 # 🛠 Tecnologias Utilizadas
 
-| Tecnologia      | Descrição                     |
-| --------------- | ----------------------------- |
-| Java 21         | Linguagem principal           |
-| Spring Boot 3   | Framework backend             |
-| Spring Data JPA | Abstração de persistência     |
-| Hibernate       | ORM                           |
-| MySQL           | Banco de dados relacional     |
-| Maven           | Gerenciamento de dependências |
-| Postman         | Teste da API                  |
+| Tecnologia        | Descrição                                     |
+| ----------------- | --------------------------------------------- |
+| Java 21           | Versão moderna da linguagem Java              |
+| Spring Boot 3.2   | Framework para desenvolvimento rápido de APIs |
+| Spring Data JPA   | Abstração para persistência de dados          |
+| Hibernate         | ORM para mapeamento objeto-relacional         |
+| MySQL             | Banco de dados relacional                     |
+| Flyway            | Controle de versão e migração de banco        |
+| Swagger (OpenAPI) | Documentação automática da API                |
 
 ---
 
-# 📡 Endpoints da API
+# 📡 Endpoints Principais
 
-### Criar médico
+## 🧑‍⚕️ Médicos & Pacientes
+
+### Criar registro
 
 ```
 POST /medicos
+POST /pacientes
 ```
 
-### Listar médicos
+### Listar registros
 
 ```
 GET /medicos
+GET /pacientes
 ```
 
-### Atualizar médico
+A listagem é **paginada** e retorna apenas registros ativos.
+
+### Atualizar registro
 
 ```
-PUT /medicos/{id}
+PUT /medicos
+PUT /pacientes
 ```
 
-### Desativar médico
+### Exclusão lógica
 
 ```
 DELETE /medicos/{id}
+DELETE /pacientes/{id}
+```
+
+Os registros não são removidos permanentemente, apenas **desativados** no sistema.
+
+---
+
+# 📖 Acessar Documentação da API
+
+Com a aplicação em execução, acesse:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+A interface do **Swagger UI** permite:
+
+* visualizar endpoints
+* testar requisições
+* analisar respostas da API
+
+---
+
+# ⚙️ Configuração do Projeto
+
+### 1️⃣ Criar banco de dados
+
+No MySQL:
+
+```
+CREATE DATABASE medical_clinic_api;
 ```
 
 ---
 
-# 📥 Exemplo de requisição (Cadastro de médico)
+### 2️⃣ Configurar credenciais
 
-```json
-{
-  "nome": "Dr. João Silva",
-  "email": "joao@email.com",
-  "telefone": "11999999999",
-  "especialidade": "CARDIOLOGIA"
-}
-```
-
----
-
-# 🗄 Banco de Dados
-
-O projeto utiliza **MySQL**.
-
-Crie o banco antes de executar a aplicação:
-
-```sql
-CREATE DATABASE vollmed_api;
-```
-
----
-
-# ⚙ Configuração
-
-Configure o arquivo:
+Edite o arquivo:
 
 ```
 src/main/resources/application.properties
 ```
 
-Exemplo:
-
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/vollmed_api
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
-
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-```
+Adicione suas credenciais de banco.
 
 ---
-
-# ▶ Como executar o projeto
-
-### 1️⃣ Clonar o repositório
-
-```
-git clone https://github.com/joaosiilvva1/medical-clinic-api.git
-```
-
-### 2️⃣ Entrar na pasta do projeto
-
-```
-cd medical-clinic-api
-```
 
 ### 3️⃣ Executar a aplicação
 
-Utilizando Maven:
+Execute via IDE ou usando Maven Wrapper:
 
 ```
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
-
-Ou execute diretamente pela sua IDE.
-
----
-
-# 🧪 Testando a API
-
-Você pode testar os endpoints usando:
-
-* Postman
-* Insomnia
-* Thunder Client (VSCode)
-
----
-
-# 📚 Melhorias futuras
-
-Algumas melhorias planejadas para o projeto:
-
-* Autenticação com **Spring Security + JWT**
-* Documentação da API com **Swagger / OpenAPI**
-* Cadastro de pacientes
-* Sistema de consultas médicas
-* Docker para execução do projeto
-* Testes automatizados
 
 ---
 
 # 👨‍💻 Autor
 
-Desenvolvido por **João** como projeto de aprendizado em **Backend Java**.
+Desenvolvido por **João Vitor** como parte da evolução contínua em **Engenharia de Software e desenvolvimento Backend com Java**.
 
 ---
 
-⭐ Se este projeto te ajudou ou foi interessante, considere dar uma estrela no repositório.
+⭐ Se este projeto foi útil para você, considere deixar uma estrela no repositório.
